@@ -1,4 +1,4 @@
-package com.kyle.MapReduce.WordCount;
+package com.kyle.mr.wcremote;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -33,10 +33,10 @@ public class WCRunner {
 		wcJob.setOutputValueClass(LongWritable.class);
 		
 		//指定要处理数据存放路径
-		FileInputFormat.setInputPaths(wcJob, new Path("hdfs://Hadoop-Server:9000//wc/word.txt"));
+		FileInputFormat.setInputPaths(wcJob, new Path(args[0]));
 		
 		//指定处理结果的输出数据存放路径
-		FileOutputFormat.setOutputPath(wcJob, new Path("hdfs://Hadoop-Server:9000//wc/output/"));
+		FileOutputFormat.setOutputPath(wcJob, new Path(args[1]));
 		
 		//将job提交给集群运行
 		wcJob.waitForCompletion(true);
