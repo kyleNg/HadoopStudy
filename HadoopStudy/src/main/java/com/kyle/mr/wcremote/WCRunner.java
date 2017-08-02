@@ -21,9 +21,9 @@ public class WCRunner {
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 		Job wcJob = Job.getInstance(conf);
-		//设置整个job所用的类在哪个jar
+		// 设置整个job所用的类在哪个jar
 		wcJob.setJarByClass(WCRunner.class);
-		
+
 		//本job使用的map和reduce类
 		wcJob.setMapperClass(WCMapper.class);
 		wcJob.setReducerClass(WCReducer.class);

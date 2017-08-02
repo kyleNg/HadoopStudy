@@ -25,7 +25,7 @@ public class FlowCount {
 			//切分字段
 			String[] fields = line.split("\t");
 			//取出手机号
-			String phoneNbr = fields[1];
+			String phoneNbr = fields[0];
 			//取出上行流量下行流量
 			long upFlow = Long.parseLong(fields[fields.length-3]);
 			long dFlow = Long.parseLong(fields[fields.length-2]);
@@ -60,6 +60,14 @@ public class FlowCount {
 	public static void main(String[] args) throws Exception {
 		
 		Configuration conf = new Configuration();
+		//是否运行为本地模式，就是看这个参数值是否为local，默认就是local
+		/*conf.set("mapreduce.framework.name", "local");*/
+
+		//本地模式运行mr程序时，输入输出的数据可以在本地，也可以在hdfs上
+		//到底在哪里，就看以下两行配置你用哪行，默认就是file:///
+		/*conf.set("fs.defaultFS", "hdfs://mini1:9000/");*/
+		/*conf.set("fs.defaultFS", "file:///");*/
+
 		/*conf.set("mapreduce.framework.name", "yarn");
 		conf.set("yarn.resoucemanager.hostname", "mini1");*/
 		Job job = Job.getInstance(conf);
@@ -83,8 +91,8 @@ public class FlowCount {
 		//指定我们自定义的数据分区器
 		job.setPartitionerClass(ProvincePartitioner.class);
 		//同时指定相应“分区”数量的reducetask
+
 		job.setNumReduceTasks(5);
-		
 		//指定job的输入原始文件所在目录
 		FileInputFormat.setInputPaths(job, new Path(args[0]));
 		//指定job的输出结果所在目录

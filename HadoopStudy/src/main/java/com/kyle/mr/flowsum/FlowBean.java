@@ -28,7 +28,7 @@ public class FlowBean implements WritableComparable<FlowBean>{
 		this.dFlow = dFlow;
 		this.sumFlow = upFlow + dFlow;
 	}
-	
+
 	public long getUpFlow() {
 		return upFlow;
 	}
